@@ -6,6 +6,8 @@ import {
   defaultFollowUpFocus,
   defaultRecentSummary,
   defaultRiskState,
+  getSoraeRitualPrompt,
+  localizeSoraeRitualPrompt,
   memoryNoticeStorageKey,
 } from "@/constants/sorae";
 import { useAuth } from "@/providers/AuthProvider";
@@ -162,7 +164,10 @@ const SoraeAIProvider: FC<{ children: ReactNode }> = ({ children }) => {
         state.messages.map((message) =>
           message.id === "assistant-welcome"
             ? { ...message, text: t("sorae_welcome_message") }
-            : message,
+            : {
+                ...message,
+                text: localizeSoraeRitualPrompt(message.text, locale),
+              },
         ),
       );
     }
@@ -191,7 +196,7 @@ const SoraeAIProvider: FC<{ children: ReactNode }> = ({ children }) => {
     if (Array.isArray(state.timelineItems)) {
       setTimelineItems(state.timelineItems);
     }
-  }, [t]);
+  }, [locale, t]);
 
   const persistSoraeState = useCallback(
     async (state: SoraeStateResponse) => {
@@ -404,7 +409,8 @@ const SoraeAIProvider: FC<{ children: ReactNode }> = ({ children }) => {
       setIsStartingRitual(true);
 
       try {
-        const state = await soraeApi.startRitual(ritualId, locale);
+        const ritualText = getSoraeRitualPrompt(ritualId, locale);
+        const state = await soraeApi.sendReflection(ritualText, locale);
         applySoraeState(state);
         await persistSoraeState(state);
       } catch {

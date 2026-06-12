@@ -56,8 +56,10 @@ export default function ChatScreen() {
   const [selectedMood, setSelectedMood] = useState("Calm");
   const [energy, setEnergy] = useState(3);
   const [checkInNote, setCheckInNote] = useState("");
+  const [activeRitualId, setActiveRitualId] = useState<RitualId | null>(null);
   const scrollViewRef = useRef<ScrollView>(null);
-  const voiceDisabled = isSending || isSendingVoice || isLoading;
+  const isSoraeThinking = isSending || isSendingVoice || isStartingRitual;
+  const voiceDisabled = isSoraeThinking || isLoading;
   const { isRecording, voiceError, toggleRecording } = useVoiceReflection({
     sendVoiceMessage,
     isDisabled: voiceDisabled,
@@ -68,10 +70,13 @@ export default function ChatScreen() {
   const todayId = new Date().toISOString().slice(0, 10);
   const needsCheckIn = latestCheckIn?.id !== todayId;
   const canSend =
-    draft.trim().length > 0 && !isSending && !isLoading && !isRecording;
+    draft.trim().length > 0 &&
+    !isSoraeThinking &&
+    !isLoading &&
+    !isRecording;
   const canCompleteOnboarding = selectedGoals.length > 0 && !isSavingOnboarding;
   const statusLabel =
-    isSending || isSendingVoice
+    isSoraeThinking
       ? t("sorae_status_thinking")
       : memoryStatus === "empty"
         ? t("sorae_status_listening")
@@ -95,7 +100,7 @@ export default function ChatScreen() {
 
   const submitMessage = (text: string) => {
     const trimmedText = text.trim();
-    if (!trimmedText || isSending) return;
+    if (!trimmedText || isSoraeThinking) return;
 
     Keyboard.dismiss();
     setDraft("");
@@ -125,8 +130,17 @@ export default function ChatScreen() {
     setCheckInNote("");
   };
 
-  const handleRitualStart = (ritualId: RitualId) => {
-    void startRitual(ritualId);
+  const handleRitualStart = async (ritualId: RitualId) => {
+    if (isSoraeThinking || isLoading) return;
+
+    await Haptics.selectionAsync();
+    setActiveRitualId(ritualId);
+
+    try {
+      await startRitual(ritualId);
+    } finally {
+      setActiveRitualId(null);
+    }
   };
 
   if (!isLoading && !onboarding) {
@@ -186,9 +200,10 @@ export default function ChatScreen() {
           )}
 
           <RitualRail
+            activeRitualId={activeRitualId}
             brandColor={brandColor}
-            isDisabled={isStartingRitual || isSending}
-            onStart={handleRitualStart}
+            isDisabled={isSoraeThinking || isLoading}
+            onStart={(ritualId) => void handleRitualStart(ritualId)}
           />
 
           {isMemoryNoticeVisible && (
@@ -203,12 +218,12 @@ export default function ChatScreen() {
               key={message.id}
               message={message}
               showQuickReplies={index === 0 && showQuickReplies}
-              isDisabled={isSending || isLoading}
+              isDisabled={isSoraeThinking || isLoading}
               onQuickReply={submitMessage}
             />
           ))}
 
-          {(isSending || isSendingVoice) && (
+          {isSoraeThinking && (
             <View className="mb-5 flex-row items-center self-start rounded-full border border-gray-100 bg-white px-4 py-3 shadow-sm dark:border-[#31293D] dark:bg-[#201A29]">
               <ActivityIndicator size="small" color={brandColor} />
               <Text className="ml-3 text-[13px] font-bold uppercase tracking-widest text-[#6B647A] dark:text-[#C7BDE0]">
@@ -227,7 +242,7 @@ export default function ChatScreen() {
         <ChatComposer
           draft={draft}
           isDarkMode={isDarkMode}
-          isSending={isSending}
+          isSending={isSoraeThinking}
           isLoading={isLoading}
           isRecording={isRecording}
           canSend={canSend}

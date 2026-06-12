@@ -1,0 +1,16 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1024" height="1024" fill="#151219"/>
+  <g transform="translate(512, 330) scale(0.35) translate(-512, -500)">
+    <!-- Speech Bubble -->
+    <path d="M512 240C350 240 210 350 210 500C210 580 250 650 320 690L290 820L440 730C460 735 485 740 512 740C674 740 814 630 814 500C814 350 674 240 512 240Z" stroke="#D8CEF5" stroke-width="48" stroke-linejoin="round" fill="none"/>
+    <!-- Audio Wave -->
+    <line x1="392" y1="465" x2="392" y2="535" stroke="#8F7DCC" stroke-width="36" stroke-linecap="round"/>
+    <line x1="452" y1="415" x2="452" y2="585" stroke="#8F7DCC" stroke-width="36" stroke-linecap="round"/>
+    <line x1="512" y1="375" x2="512" y2="625" stroke="#8F7DCC" stroke-width="36" stroke-linecap="round"/>
+    <line x1="572" y1="415" x2="572" y2="585" stroke="#8F7DCC" stroke-width="36" stroke-linecap="round"/>
+    <line x1="632" y1="465" x2="632" y2="535" stroke="#8F7DCC" stroke-width="36" stroke-linecap="round"/>
+  </g>
+  <text x="512" y="585" fill="#D8CEF5" font-family="New York, Georgia, serif" font-size="140" font-weight="500" text-anchor="middle">Sorae</text>
+  <text x="512" y="670" fill="#A39EBC" font-family="Avenir Next, Arial, sans-serif" font-size="30" font-weight="700" text-anchor="middle" letter-spacing="15">MEMORIA VIVA</text>
+  <path d="M380 720H644" stroke="#8F7DCC" stroke-width="10" stroke-linecap="round"/>
+</svg>

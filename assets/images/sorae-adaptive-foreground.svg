@@ -1,0 +1,11 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Speech Bubble -->
+  <path d="M256 120C175 120 105 175 105 250C105 290 125 325 160 345L145 410L220 365C230 367.5 242.5 370 256 370C337 370 407 315 407 250C407 175 337 120 256 120Z" stroke="#D8CEF5" stroke-width="24" stroke-linejoin="round" fill="none"/>
+
+  <!-- Audio Wave -->
+  <line x1="196" y1="232.5" x2="196" y2="267.5" stroke="#8F7DCC" stroke-width="18" stroke-linecap="round"/>
+  <line x1="226" y1="207.5" x2="226" y2="292.5" stroke="#8F7DCC" stroke-width="18" stroke-linecap="round"/>
+  <line x1="256" y1="187.5" x2="256" y2="312.5" stroke="#8F7DCC" stroke-width="18" stroke-linecap="round"/>
+  <line x1="286" y1="207.5" x2="286" y2="292.5" stroke="#8F7DCC" stroke-width="18" stroke-linecap="round"/>
+  <line x1="316" y1="232.5" x2="316" y2="267.5" stroke="#8F7DCC" stroke-width="18" stroke-linecap="round"/>
+</svg>
