@@ -1,0 +1,9 @@
+{
+  "NSMicrophoneUsageDescription": "Sorae uses the microphone only to record and transcribe your reflection.",
+  "CFBundleDisplayName": "Sorae",
+  "ios": {
+    "Localizable.strings": {
+      "SoraeReminderBody": "Would you like to close the day with a brief reflection?"
+    }
+  }
+}
